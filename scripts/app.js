@@ -1,3 +1,4 @@
+// 
 var injectedForecast = {
   key: 'newyork',
   label: 'New York, NY',
@@ -178,10 +179,12 @@ var injectedForecast = {
     });
   };
 
+  // 
   app.saveSelectedCities = function() {
     window.localforage.setItem('selectedCities', app.selectedCities);
   };
 
+  // 
   document.addEventListener('DOMContentLoaded', function() {
     window.localforage.getItem('selectedCities', function(err, cityList) {
       if (cityList) {
