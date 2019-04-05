@@ -153,8 +153,22 @@ var injectedForecast = {
    ****************************************************************************/
 
   // Gets a forecast for a specific city and update the card with the data
+  // Using Cache first, then Network STRATEGY
   app.getForecast = function(key, label) {
     var url = weatherAPIUrlBase + key + '.json';
+    // Try and get data from the CACHE 
+    if ('caches' in window) {
+      caches.match(url).then(function(response) {
+        if (response) {
+          response.json().then(function(json) {
+            json.key = key;
+            json.label = label;
+            app.updateForecastCard(json);
+          });
+        }
+      });
+    }
+    // Type and make an AJAX request (over the NETWORK)
     // Make the XHR to get the data, then update the card
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
